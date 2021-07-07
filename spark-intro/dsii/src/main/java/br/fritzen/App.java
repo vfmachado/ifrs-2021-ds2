@@ -5,11 +5,15 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.fritzen.config.Database;
 import br.fritzen.user.User;
 import br.fritzen.user.UserController;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+/*
+    mvn -U clean install    => forcar a instalacao dos repos do maven
+*/
 
 public class App {
 
@@ -22,7 +26,8 @@ public class App {
         get("/user/:name", (req, res) -> "Rota /hello/:name NAME: " + req.params(":name"));
 
         post("/user", (req, res) -> {
-
+            aqui eu tentei fazer tal coisa...
+            
             System.out.println(req.body());
             lastname = req.body();
             return "OK";
@@ -35,8 +40,12 @@ public class App {
          * POST /USER => INSIRA UM NOVO USUARIO 
          * 
          */
+
+        Database.getConnection();
+
         staticFiles.location("/public");
 
+        get("/user/:name", UserController.detail);
         post("/user", (req, res) -> UserController.create(req, res), new HandlebarsTemplateEngine());
         get("/user",  (req, res) -> UserController.list(req, res), new HandlebarsTemplateEngine());
 

@@ -22,8 +22,11 @@ public class UserController {
     String email = req.queryParams("email");
 
     User user = new User(name, email);
-    users.add(user);
+    users.add(user);  //banco fake array list 
 
+    UserDao userDao = new UserDao();
+    userDao.add(user);  //insere no banco
+    
     Map<String, String> model = new HashMap();
     model.put("name", user.getName());
     model.put("email", user.getEmail());
@@ -35,10 +38,26 @@ public class UserController {
   public static ModelAndView list(Request req, Response res) {
     
     Map<String, Object> model = new HashMap<>();
-    model.put("users", users);
+    //model.put("users", users);
+    UserDao userDao = new UserDao();
+    model.put("users", userDao.getUsers());
     return new ModelAndView(model, "listUsers.hbs");
 
   };
 
+
+  public static Route detail = (req, res) -> {
+
+    String name = req.params("name");
+    UserDao userDao = new UserDao();
+    User user = userDao.getByName(name);
+
+    if (user != null) {
+      return "Retornado " + user;
+    } else {
+      return "OOopps, usuario nao encontrado";
+    }
+    
+  };
 
 }
