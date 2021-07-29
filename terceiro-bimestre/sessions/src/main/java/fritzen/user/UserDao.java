@@ -1,4 +1,4 @@
-package br.fritzen.user;
+package fritzen.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.fritzen.config.Database;
+import fritzen.config.Database;
 
 public class UserDao {
 
@@ -91,6 +91,7 @@ public class UserDao {
 
       if (rs.next()) {
         user = new User(rs.getString("name"), rs.getString("email"), rs.getString("password"));
+        user.setId(rs.getInt("id"));
       }
       
     } catch (SQLException e) {

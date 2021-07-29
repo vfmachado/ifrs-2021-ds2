@@ -20,8 +20,9 @@ public class UserController {
 
     String name = req.queryParams("name");
     String email = req.queryParams("email");
+    String password = req.queryParams("password");
 
-    User user = new User(name, email);
+    User user = new User(name, email, password);
     users.add(user);  //banco fake array list 
 
     UserDao userDao = new UserDao();
