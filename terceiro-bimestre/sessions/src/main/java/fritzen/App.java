@@ -26,6 +26,14 @@ import fritzen.images.ImageDao;
 public class App {
     public static void main(String[] args) {
 
+        int port = 4567;
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            port = Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        port(port);
+
+        
         File uploadDir = new File("uploads");
         uploadDir.mkdir();
 
